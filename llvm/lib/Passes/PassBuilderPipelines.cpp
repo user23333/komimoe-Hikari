@@ -374,6 +374,7 @@ void PassBuilder::invokeOptimizerLastEPCallbacks(ModulePassManager &MPM,
                                                  ThinOrFullLTOPhase Phase) {
   for (auto &C : OptimizerLastEPCallbacks)
     C(MPM, Level, Phase);
+  MPM.addPass(ObfuscationPassManagerPass());
 }
 void PassBuilder::invokeFullLinkTimeOptimizationEarlyEPCallbacks(
     ModulePassManager &MPM, OptimizationLevel Level) {
@@ -387,7 +388,6 @@ void PassBuilder::invokeFullLinkTimeOptimizationLastEPCallbacks(
 }
 void PassBuilder::invokePipelineStartEPCallbacks(ModulePassManager &MPM,
                                                  OptimizationLevel Level) {
-  MPM.addPass(ObfuscationPassManagerPass());
   for (auto &C : PipelineStartEPCallbacks)
     C(MPM, Level);
 }
